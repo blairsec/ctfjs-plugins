@@ -33,6 +33,7 @@ module.exports = function (ctf) {
 			return home
 		}
 	}
+	ctf.models.Home = Home
 
 	// set up router
 	var router = express.Router()
