@@ -62,7 +62,7 @@ module.exports = function (ctf) {
 
 	globalRouter.use('/deploy', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
 		if (req.user.admin === true) {
-			proxy({ target: process.env.SHELL_DEPLOY_URL, changeOrigin: true, headers: { Authorization: process.env.SHELL_DEPLOY_AUTH } })(req, res, next)
+			proxy({ target: process.env.SHELL_DEPLOY_URL, changeOrigin: true, headers: { Authorization: process.env.SHELL_DEPLOY_AUTH }, prependPath: false })(req, res, next)
 		} else {
 			res.sendStatus(403)
 		}
