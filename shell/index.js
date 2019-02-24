@@ -55,7 +55,12 @@ module.exports = function (ctf) {
 		}
 	})
 
-	router.use('/deploy', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
+	// add route to ctf
+	ctf.addCompetitionRoute('/shell', router)
+
+	var globalRouter = express.Router()
+
+	globalRouter.use('/deploy', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
 		if (req.user.admin === true) {
 			proxy({ target: process.env.SHELL_DEPLOY_URL, changeOrigin: true, headers: { Authorization: process.env.SHELL_DEPLOY_AUTH } })(req, res, next)
 		} else {
@@ -63,8 +68,7 @@ module.exports = function (ctf) {
 		}
 	})
 
-	// add route to ctf
-	ctf.addCompetitionRoute('/shell', router)
+	ctf.addGlobalRoute('/shell', globalRouter)
 
 	ctf.after('createTeam', async function (req, data) {
 		await createAccount(data.team.id)
