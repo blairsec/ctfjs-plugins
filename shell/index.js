@@ -1,5 +1,6 @@
 module.exports = function (ctf) {
 	var express = require('express')
+	var proxy = require('http-proxy-middleware')
 	var node_ssh = require('node-ssh')
 	var niceware = require('niceware')
 	var passport = ctf.passport
@@ -51,6 +52,14 @@ module.exports = function (ctf) {
 			}
 		} else {
 			res.status(403).json({message: 'action_forbidden'})
+		}
+	})
+
+	router.use('/deploy', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
+		if (req.user.admin === true) {
+			proxy({ target: process.env.SHELL_DEPLOY_URL, changeOrigin: true, headers: { Authorization: process.env.SHELL_DEPLOY_AUTH } })(req, res, next)
+		} else {
+			res.sendStatus(403)
 		}
 	})
 
