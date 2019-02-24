@@ -76,9 +76,11 @@ module.exports = function (ctf) {
 		try {
 			await ssh.exec('sudo', ['userdel', '-r', 'team'+teamId])
 		} catch (e) {}
-		await ssh.exec('sudo', ['useradd', '-m', '-G', 'teams', 'team'+teamId])
+		await ssh.exec('sudo', ['useradd', '-s', '/bin/bash', '-m', '-G', 'teams', 'team'+teamId])
 		await ssh.exec('sudo', ['chpasswd'], { stdin: 'team'+teamId+':'+password+'\n' })
 		await ssh.exec('sudo', ['chmod', '0700', '/home/team'+teamId])
+		await ssh.exec('sudo', ['edquota', '-p', 'team', 'team'+teamId])
+		await ssh.dispose()
 		shell = new Shell({ username: 'team'+teamId, password: password, team: teamId })
 		await shell.save()
 	}
