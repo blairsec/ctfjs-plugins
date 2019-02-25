@@ -79,7 +79,7 @@ module.exports = function (ctf) {
       text:
 `Hello ${u.username},
 
-You recently signed up for ${h.title} ${c.name}. To confirm your email and activate your account, please visit the following link: ${process.env.VERIFY_URL + token}
+You recently signed up for ${h.title} ${c.name}. To confirm your email and activate your account, please visit the following link: ${process.env.VERIFY_URL.replace(/<competition>/g, c.name) + token}
 
 If you did not sign up for this event, you can safely ignore this email. The link is only valid for the next 15 minutes.
 
@@ -87,14 +87,12 @@ If you did not sign up for this event, you can safely ignore this email. The lin
       html:
 `<div>Hello <code>${u.username.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code>,</div>
 <div><br></div>
-<div>You recently signed up for ${h.title} ${c.name}. To confirm your email and activate your account, please visit the following link: <a href="${process.env.VERIFY_URL + token}">${process.env.VERIFY_URL + token}</a></div>
+<div>You recently signed up for ${h.title} ${c.name}. To confirm your email and activate your account, please visit the following link: <a href="${process.env.VERIFY_URL.replace(/<competition>/g, c.name) + token}">${process.env.VERIFY_URL.replace(/<competition>/g, c.name) + token}</a></div>
 <div><br></div>
 <div>If you did not sign up for this event, you can safely ignore this email. The link is only valid for the next 15 minutes.</div>
 <div><br></div>
 <div>- ${h.title} Team</div>`
     })
-    console.log(i)
-    console.log(nodemailer.getTestMessageUrl(i))
     return true
   }
 

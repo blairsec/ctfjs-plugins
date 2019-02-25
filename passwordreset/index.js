@@ -85,7 +85,7 @@ module.exports = function (ctf) {
       text:
 `Hello ${u.username},
 
-You recently requested to reset your password for ${h.title} ${c.name}. To reset your password, please visit the following link: ${process.env.RESET_URL + token}
+You recently requested to reset your password for ${h.title} ${c.name}. To reset your password, please visit the following link: ${process.env.RESET_URL.replace(/<competition>/g, c.name) + token}
 
 If you did not request to reset your password, you can safely ignore this email. The link is only valid for the next 15 minutes.
 
@@ -93,7 +93,7 @@ If you did not request to reset your password, you can safely ignore this email.
       html:
 `<div>Hello <code>${u.username.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code>,</div>
 <div><br></div>
-<div>You recently requested to reset your password for ${h.title} ${c.name}. To reset your password, please visit the following link: <a href="${process.env.RESET_URL + token}">${process.env.RESET_URL + token}</a></div>
+<div>You recently requested to reset your password for ${h.title} ${c.name}. To reset your password, please visit the following link: <a href="${process.env.RESET_URL.replace(/<competition>/g, c.name) + token}">${process.env.RESET_URL.replace(/<competition>/g, c.name) + token}</a></div>
 <div><br></div>
 <div>If you did not request to reset your password, you can safely ignore this email. The link is only valid for the next 15 minutes.</div>
 <div><br></div>
