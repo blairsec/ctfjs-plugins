@@ -53,13 +53,15 @@ module.exports = function (ctf) {
 			return res.sendStatus(403)
 		}
 		try {
-			var r = await axios.post(url + '/instances', {
+			var data = {
 				repo: req.body.repo,
 				tag: req.body.tag,
 				environment: {
 					VIRTUAL_HOST: req.body.domain
 				}
-			}, { headers: { Authorization: auth } })
+			}
+			if (!data.environment.VIRTUAL_HOST) delete data.environment
+			var r = await axios.post(url + '/instances', data, { headers: { Authorization: auth } })
 			var name = r.data
 			var instance = new Instance({
 				repo: req.body.repo,
