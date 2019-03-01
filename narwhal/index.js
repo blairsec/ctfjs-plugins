@@ -153,7 +153,6 @@ module.exports = function (ctf) {
 			await axios.delete(url + '/instances/' + req.params.name, { headers: { Authorization: auth } })
 		} catch (err) {
 			console.log(err)
-			return res.sendStatus(500)
 		}
 		await Instance.delete({ container: req.params.name })
 		res.sendStatus(204)
