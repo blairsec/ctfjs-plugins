@@ -53,8 +53,7 @@ module.exports = function (ctf) {
 
 	// send password reset email
 	router.post('/auth/reset/token', [
-    body('email').isString().trim().matches(/^\S+@\S+\.\S+$/),
-    body('token').isString()
+    body('email').isString().trim().matches(/^\S+@\S+\.\S+$/)
   ], async (req, res) => {
     // check if data was valid
     var errors = validationResult(req)
@@ -119,7 +118,8 @@ If you did not request to reset your password, you can safely ignore this email.
 
 	// reset password
 	router.post('/auth/reset', [
-      body('password').isString().isLength({ min: 8 })
+      body('password').isString().isLength({ min: 8 }),
+      body('token').isString()
     ], async (req, res) => {
     // check if data was valid
     var errors = validationResult(req)
