@@ -21,7 +21,7 @@ module.exports = function (ctf) {
 					valid: tag => typeof tag === 'string'
 				},
 				{
-					name: 'options',
+					name: 'domain',
 					valid: domain => typeof domain === 'string'
 				},
 				{
@@ -46,8 +46,8 @@ module.exports = function (ctf) {
 
 	router.post('/', [
 		body('repo').isString().isLength({ min: 1 }),
-		body('tag').isString(),
-		body('options').isString()
+		body('tag').isString().isLength({ min: 1 }),
+		body('domain').isString().isLength({ min: 1 })
 	], passport.authenticate('jwt', { session: false }), async function (req, res) {
 		if (req.user.admin !== true) {
 			return res.sendStatus(403)
@@ -56,8 +56,11 @@ module.exports = function (ctf) {
 			var data = {
 				repo: req.body.repo,
 				tag: req.body.tag,
-				options: JSON.parse(req.body.options)
+				environment: {
+					VIRTUAL_HOST: req.body.domain
+				}
 			}
+			if (!data.environment.VIRTUAL_HOST) delete data.environment
 			var r = await axios.post(url + '/instances', data, { headers: { Authorization: auth } })
 			var name = r.data
 			var instance = new Instance({
@@ -120,7 +123,9 @@ module.exports = function (ctf) {
 				var r = await axios.post(url + '/instances', {
 					repo: i.repo,
 					tag: i.tag,
-					options: JSON.parse(i.options)
+					environment: {
+						VIRTUAL_HOST: i.domain
+					}
 				}, { headers: { Authorization: auth } })
 			} catch (err) {
 				console.log(err)
