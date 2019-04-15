@@ -80,7 +80,7 @@ module.exports = function (ctf) {
     transporter.sendMail({
       from: process.env.EMAIL_FROM,
       to: req.body.email,
-      subject: 'Verify Email for ' + h.title + ' ' + c.name,
+      subject: 'Reset Password for ' + h.title + ' ' + c.name,
       text:
 `Hello ${u.username},
 
