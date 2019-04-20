@@ -87,6 +87,7 @@ module.exports = function (ctf) {
 			password: process.env.SHELL_PASSWORD
 		})
 		try {
+			await ssh.exec('sudo', ['killall', '-u', 'team'+teamId])
 			await ssh.exec('sudo', ['userdel', '-r', 'team'+teamId])
 		} catch (e) {}
 		await ssh.exec('sudo', ['useradd', '-s', '/bin/bash', '-m', '-G', 'teams', 'team'+teamId])
