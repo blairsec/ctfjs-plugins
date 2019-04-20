@@ -103,7 +103,12 @@ module.exports = function (ctf) {
 		var teams = await Team.find({})
 		for (var i = 0; i < teams.length; i++) {
 			if (!await Shell.findOne({ team: teams[i].id })) {
-				await createAccount(teams[i].id)
+				try {
+					await createAccount(teams[i].id)
+				} catch (err) {
+					console.log(err)
+					i--
+				}
 			}
 		}
 	}
