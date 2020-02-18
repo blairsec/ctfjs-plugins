@@ -2,7 +2,7 @@ module.exports = function (ctf) {
 	var express = require('express')
 	var proxy = require('http-proxy-middleware')
 	var node_ssh = require('node-ssh')
-	var niceware = require('niceware')
+	var crypto = require('crypto')
 	var passport = ctf.passport
 	var User = ctf.models.User
 	var Team = ctf.models.Team
@@ -78,7 +78,7 @@ module.exports = function (ctf) {
 	async function createAccount(teamId) {
 		console.log(teamId)
 		var ssh = new node_ssh()
-		var password = niceware.generatePassphrase(8).join(' ')
+		var password = crypto.randomBytes(10).toString('hex')
 		var shell
 		await ssh.connect({
 			host: process.env.SHELL_HOST,
