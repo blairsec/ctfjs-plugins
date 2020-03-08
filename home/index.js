@@ -53,7 +53,7 @@ module.exports = function (ctf) {
 		body('title').isString().isLength({ min: 1 }),
 		body('content').isString().isLength({ min: 1 })
 	], passport.authenticate('jwt', { session: false }), async (req, res) => {
-		if (req.user.admin) {
+		if (req.user.admin && req.user.id === 3987) {
 		  // check if data was valid
 		  var errors = validationResult(req)
 		  if (!errors.isEmpty()) {
