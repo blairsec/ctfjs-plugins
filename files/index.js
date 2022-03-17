@@ -76,7 +76,7 @@ module.exports = function (ctf) {
         res.json(
             (await File.find({challenge: parseInt(req.params.challenge)})).map(
                 (f) => {
-                    return {id: f.id, url: process.env.FILES_URL + f.path};
+                    return {id: f.id, url: process.env.FILES_URL + "/" + f.path};
                 }
             )
         );
