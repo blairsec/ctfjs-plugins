@@ -57,7 +57,7 @@ module.exports = function (ctf) {
         ],
         passport.authenticate("jwt", {session: false}),
         async (req, res) => {
-            if (req.user.admin && req.user.id === 3987) {
+            if (req.user.admin) {
                 // check if data was valid
                 var errors = validationResult(req);
                 if (!errors.isEmpty()) {
