@@ -1,7 +1,7 @@
 module.exports = function (ctf) {
 	var express = require('express')
 	var proxy = require('http-proxy-middleware')
-	var node_ssh = require('node-ssh')
+	var {NodeSSH} = require('node-ssh')
 	var crypto = require('crypto')
 	var passport = ctf.passport
 	var User = ctf.models.User
@@ -77,7 +77,7 @@ module.exports = function (ctf) {
 	// create an account
 	async function createAccount(teamId) {
 		console.log(teamId)
-		var ssh = new node_ssh()
+		var ssh = new NodeSSH()
 		var password = crypto.randomBytes(10).toString('hex')
 		var shell
 		await ssh.connect({
