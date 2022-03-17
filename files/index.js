@@ -132,7 +132,7 @@ module.exports = function (ctf) {
                                 "\\)",
                             "g"
                         ),
-                        "[$1](" + process.env.FILES_URL + files[f].path + ")"
+                        "[$1](" + process.env.FILES_URL + "/" + files[f].path + ")"
                     );
                 }
             }
