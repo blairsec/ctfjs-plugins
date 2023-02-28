@@ -21,8 +21,8 @@
         "webdav": "^4.8.0"
     },
     "devDependencies": {
-        "ctfjs": "^0.5.3",
-        "mocha": "^5.2.0",
+        "ctfjs": "^0.7.3",
+        "mocha": "^10.2.0",
         "pg": "^7.18.1",
         "supertest": "^3.4.2"
     }
